@@ -1,0 +1,52 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 23
+    buildToolsVersion "23.0.2"
+
+    defaultConfig {
+        applicationId "com.jkxy.sharelocation"
+        minSdkVersion 14
+        targetSdkVersion 23
+        versionCode 1
+        versionName "1.0"
+    }
+    signingConfigs {//签名配置
+        release {//发布版签名配置
+            storeFile file("appkey.jks")//密钥文件路径
+            storePassword "cdwappkey"//密钥文件密码
+            keyAlias "cdwappkey"//key别名
+            keyPassword "cdwappkey"//key密码
+        }
+        debug {//debug版签名配置
+            storeFile file("appkey.jks")
+            storePassword "cdwappkey"
+            keyAlias "cdwappkey"
+            keyPassword "cdwappkey"
+        }
+    }
+    buildTypes {
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release//设置签名信息
+        }
+        debug {//调试
+            signingConfig signingConfigs.debug
+        }
+    }
+    sourceSets{
+        main{
+             jniLibs.srcDirs=['libs']
+    }
+    }
+
+
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    testCompile 'junit:junit:4.12'
+    compile 'com.android.support:appcompat-v7:23.2.0'
+    compile files('libs/gson-2.3.1.jar')
+}
